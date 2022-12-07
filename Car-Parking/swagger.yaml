@@ -1,0 +1,414 @@
+basePath: /
+consumes:
+    - application/json
+definitions:
+    Car:
+        description: Car represents the car of the user
+        properties:
+            CarModel:
+                description: |-
+                    Carmodel of the car
+                    in: string
+                type: string
+            CarNumber:
+                description: |-
+                    Carnumber of the car
+                    in: string
+                type: string
+            TimeIn:
+                description: |-
+                    Car Timein
+                    in: time.Time
+                format: date-time
+                type: string
+            TimeOut:
+                description: |-
+                    Car Timeout
+                    in: time.Time
+                format: date-time
+                type: string
+            UniqueSlotNo:
+                description: |-
+                    Unique Slot Number in which the car is parked
+                    in: string
+                type: string
+            UserID:
+                description: |-
+                    UserID of the user to whom the car belongs
+                    in: string
+                type: string
+        required:
+            - CarNumber
+            - UserID
+            - UniqueSlotNo
+        type: object
+        x-go-package: Parking.com/DAL
+    Slot:
+        description: Slot represents the Parking Slot
+        properties:
+            FloorNo:
+                description: |-
+                    Floor Number
+                    in: int
+                format: int64
+                type: integer
+            Occupancy:
+                description: |-
+                    Occupancy of the slot
+                    in: bool
+                type: boolean
+            UniqueSlotNo:
+                description: |-
+                    Unique Slot Number
+                    in: string
+                type: string
+        required:
+            - FloorNo
+            - UniqueSlotNo
+            - Occupancy
+        type: object
+        x-go-package: Parking.com/DAL
+    User:
+        description: User represents the user for this application
+        properties:
+            FName:
+                description: |-
+                    First Name of the user
+                    in: string
+                type: string
+            LName:
+                description: |-
+                    Last Name of the user
+                    in: string
+                type: string
+            UserID:
+                description: |-
+                    ID of the user
+                    in: string
+                type: string
+        required:
+            - UserID
+            - FName
+            - LName
+        type: object
+        x-go-package: Parking.com/DAL
+host: localhost:8080
+info:
+    title: Car-Parking API.
+    version: 0.0.1
+paths:
+    /car:
+        get:
+            operationId: getCar
+            parameters:
+                - in: query
+                  name: page
+                  required: true
+                  type: string
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: car response
+                    schema:
+                        items:
+                            $ref: '#/definitions/Car'
+                        type: array
+            summary: Insert documentation
+        post:
+            operationId: addCar
+            parameters:
+                - in: body
+                  name: Body
+                  schema:
+                    $ref: '#/definitions/Car'
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: car response
+                    schema:
+                        items:
+                            $ref: '#/definitions/Car'
+                        type: array
+            summary: Include documentation
+    /car/{carnumber}:
+        delete:
+            operationId: deleteCar
+            parameters:
+                - description: Carnumber to delete a car
+                  in: path
+                  name: carnumber
+                  required: true
+                  type: string
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: car response
+                    schema:
+                        items:
+                            $ref: '#/definitions/Car'
+                        type: array
+            summary: Insert documentation
+        get:
+            description: Insert documentation
+            operationId: getCarbyNumber
+            parameters:
+                - description: Car number that need to be returned
+                  in: path
+                  name: carnumber
+                  required: true
+                  type: string
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: car response
+                    schema:
+                        items:
+                            $ref: '#/definitions/Car'
+                        type: array
+        put:
+            operationId: updateCar
+            parameters:
+                - description: Car Number to update a car
+                  in: path
+                  name: carnumber
+                  required: true
+                  type: string
+                - in: body
+                  name: Body
+                  schema:
+                    $ref: '#/definitions/Car'
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: car response
+                    schema:
+                        items:
+                            $ref: '#/definitions/Car'
+                        type: array
+            summary: Include documentation
+    /cartimein/{carnumber}:
+        put:
+            operationId: updateTimeInCar
+            parameters:
+                - description: Car Number to update car timein
+                  in: path
+                  name: carnumber
+                  required: true
+                  type: string
+                - in: body
+                  name: Body
+                  schema:
+                    $ref: '#/definitions/Car'
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: car response
+                    schema:
+                        items:
+                            $ref: '#/definitions/Car'
+                        type: array
+            summary: Include documentation
+    /cartimeout/{carnumber}:
+        put:
+            operationId: updateTimeoutCar
+            parameters:
+                - description: Car Number to update car timeout
+                  in: path
+                  name: carnumber
+                  required: true
+                  type: string
+                - in: body
+                  name: Body
+                  schema:
+                    $ref: '#/definitions/Car'
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: car response
+                    schema:
+                        items:
+                            $ref: '#/definitions/Car'
+                        type: array
+            summary: Include documentation
+    /slot:
+        get:
+            description: Insert documentation
+            operationId: getSlot
+            parameters:
+                - in: query
+                  name: page
+                  required: true
+                  type: string
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: slot response
+                    schema:
+                        items:
+                            $ref: '#/definitions/Slot'
+                        type: array
+        post:
+            operationId: addSlot
+            parameters:
+                - in: body
+                  name: Body
+                  schema:
+                    $ref: '#/definitions/Slot'
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: slot response
+                    schema:
+                        items:
+                            $ref: '#/definitions/Slot'
+                        type: array
+            summary: Include documentation
+    /slot/{uniqueslotno}:
+        delete:
+            operationId: deleteSlot
+            parameters:
+                - description: Unique slot number that deletes a slot
+                  in: path
+                  name: uniqueslotno
+                  required: true
+                  type: string
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: slot response
+                    schema:
+                        items:
+                            $ref: '#/definitions/Slot'
+                        type: array
+            summary: Insert documentation
+        put:
+            operationId: updateSlot
+            parameters:
+                - description: Unique slot number to update a slot
+                  in: path
+                  name: uniqueslotno
+                  required: true
+                  type: string
+                - in: body
+                  name: body
+                  schema:
+                    $ref: '#/definitions/Slot'
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: slot response
+                    schema:
+                        items:
+                            $ref: '#/definitions/Slot'
+                        type: array
+            summary: Insert documentation
+    /slot/free:
+        get:
+            operationId: getFreeSlot
+            parameters:
+                - in: query
+                  name: page
+                  required: true
+                  type: string
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: slot response
+                    schema:
+                        items:
+                            $ref: '#/definitions/Slot'
+                        type: array
+            summary: Insert documentation
+    /user:
+        get:
+            operationId: getUser
+            parameters:
+                - in: query
+                  name: page
+                  required: true
+                  type: string
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: user response
+                    schema:
+                        items:
+                            $ref: '#/definitions/User'
+                        type: array
+            summary: Insert documentation
+        post:
+            operationId: addUser
+            parameters:
+                - in: body
+                  name: Body
+                  schema:
+                    $ref: '#/definitions/User'
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: user response
+                    schema:
+                        items:
+                            $ref: '#/definitions/User'
+                        type: array
+            summary: Include documentation
+    /user/{userid}:
+        delete:
+            operationId: deleteUser
+            parameters:
+                - description: User id that deletes a user
+                  in: path
+                  name: userid
+                  required: true
+                  type: string
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: user response
+                    schema:
+                        items:
+                            $ref: '#/definitions/User'
+                        type: array
+            summary: Insert documentation
+        put:
+            operationId: updateUser
+            parameters:
+                - description: User id that updates a user
+                  in: path
+                  name: userid
+                  required: true
+                  type: string
+                - in: body
+                  name: body
+                  schema:
+                    $ref: '#/definitions/User'
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: user response
+                    schema:
+                        items:
+                            $ref: '#/definitions/User'
+                        type: array
+            summary: Insert documentation
+produces:
+    - application/json
+schemes:
+    - http
+swagger: "2.0"
