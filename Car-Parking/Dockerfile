@@ -4,16 +4,16 @@ FROM golang:1.19.1
 
 WORKDIR /app
 
-COPY go.mod ./
-COPY go.sum ./
+COPY ./ ./
+
 RUN go mod download
 
 COPY . ./
 
-RUN go build -o /cpr/
+RUN go build -o /Car-Parking
 
-RUN ls /cpr/
+RUN ls /Car-Parking/
 
 EXPOSE 8080
 
-CMD [ "/cpr/Parking.com" ]
+CMD [ "/Car-Parking/Parking.com" ]
