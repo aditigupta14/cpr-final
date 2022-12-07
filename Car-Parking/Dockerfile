@@ -10,7 +10,7 @@ RUN go mod download
 
 COPY . ./
 
-RUN go build -o /Car-Parking
+RUN go build -o /Car-Parking/
 
 RUN ls /Car-Parking/
 
